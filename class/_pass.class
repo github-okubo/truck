@@ -1,0 +1,8 @@
+<?
+ class pass{
+
+    public function mkpass(int $i=4){
+        $str = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPUQRSTUVWXYZ';
+        return substr(str_shuffle($str), 0, $i);
+    }
+}

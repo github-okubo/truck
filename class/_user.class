@@ -1,0 +1,37 @@
+<?
+require_once("_dao.class");
+
+class user extends DAO{
+
+    public function __construct(){
+        session_start();
+
+        if (is_array($_SESSION) && empty($_SESSION)) {
+            header("location:http://xs101199.xsrv.jp/login/?error");
+        }
+    }
+
+    public function login(String $email="",String $pass=""){
+        $dao = new dao();
+        $user = $dao->directQuery("select * from personal_info where email='" .$email ."' and " ."pass='" .$pass. "'");
+        if (is_array($user) && empty($user)) {
+            return false;
+        } else {
+            session_start();
+            $_SESSION['user'] =  $user[0];
+            return true;
+        }
+    }
+
+    public function getUser(){
+        return $_SESSION['user']['req'];
+    }
+
+    public function status(){
+        if (is_array($_SESSION['user']) && empty($_SESSION['user'])) {
+            header("location:http://xs101199.xsrv.jp/login/error");
+        }
+	}
+
+}
+?>

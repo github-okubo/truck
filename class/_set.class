@@ -1,0 +1,11 @@
+<?
+
+class setDB {
+	const conn = "mysql:host=localhost;dbname=xs101199_hitaya;charset=utf8";
+	const pass = "EuBZg1Dz";
+	const user="xs101199_hitaya";
+
+}
+
+
+?>

@@ -1,0 +1,50 @@
+p{
+    width:100%;
+    margin-top:0;
+    padding-top:48px;
+    line-height: 1.2;
+    text-align: center;
+    font-size: 1.5em;
+    /* mix-blend-mode:overlay; */
+
+}
+
+.float{
+    float: left;
+}
+
+
+.display-4 ,.container {
+    text-align: center;
+  }
+.container {
+    text-align: center;
+    width: 80%;
+  }
+ 
+
+  @media screen and (min-width: 769px) {
+    h1{
+        font-size: 40px;
+        padding: 0 50px;
+      }
+
+    h2{
+        font-size: 30px;
+        padding: 0 40px;
+    } 
+    
+    }
+
+  /* スマホ */
+@media screen and (max-width: 768px) {
+
+    h1{
+        font-size: 1.75em;
+    } 
+
+    h2{
+        font-size: 1.5em;
+    } 
+
+}

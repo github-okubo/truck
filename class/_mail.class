@@ -1,0 +1,128 @@
+<?
+/**
+ * Explanation of class
+ *      MailObject
+ * @package  webLogic Module(Liberty)
+ * @author   komuro
+ * @since    PHP 7.2
+ * @version  $Id: mail.class,v 1.00 2018/09/1 danielc Exp $
+ */
+ 
+ class mail{
+
+	private $boundary;
+	private $attached;
+	private $emails;
+
+	public function __construct(){
+		mb_internal_encoding("UTF-8");
+		mb_language("japanese");
+		$this->boundary = "---=_" . uniqid("Boundary") . "_" . uniqid("Next");
+		$this->attached = false;
+		$this->emails = "";
+	}
+	
+	public function headers(String $email):String{
+		//添付ファイル無し
+		$headers  = "MIME-Version: 1.0 \n" ;
+		if($this->attached == false){
+			$headers .= "From: " .
+			       "\"".mb_encode_mimeheader (mb_convert_encoding($email,"ISO-2022-JP","AUTO")) ."\" " .
+			       "<".$email."> \n";
+			$headers .= "Return-Path: " .
+			       "\"".mb_encode_mimeheader (mb_convert_encoding($email,"ISO-2022-JP","AUTO")) ."\" " .
+			       "<".$email."> \n";
+			if($this->emails != ""){
+				foreach($this->emails as $ccmail){
+					$headers = "Cc: " . mb_encode_mimeheader(mb_convert_encoding($ccmail,"ISO-2022-JP")) . "<" . $ccmail . "> \n";
+				}
+			}
+			$headers .= "Content-Type: text/plain; charset=ISO-2022-JP \n";
+		}
+
+		//添付ファイル有
+		if($this->attached == true){
+			$headers = "From: " . mb_encode_mimeheader(mb_convert_encoding($email,"ISO-2022-JP")) . "<" . $email . "> \n";
+			if($this->emails != ""){
+				foreach($this->emails as $ccmail){
+					$headers = "Cc: " . mb_encode_mimeheader(mb_convert_encoding($ccmail,"ISO-2022-JP")) . "<" . $ccmail . "> \n";
+				}
+			}
+
+			$headers .= "Content-Type: multipart/mixed; boundary=\"{$this->boundary}\"\n";
+			$headers .= "Content-Transfer-Encoding: 7bit";
+
+		}
+	
+		return $headers;
+	}
+	
+	public function boundary(int $max_count=1):Array{
+		for($i=0;$i < $max_count;$i++){
+			$boundary[$i] = "---=_" . uniqid("Boundary") . "_" . uniqid("Next");
+		}
+		return $boundary;
+	}
+
+	public function addFile($filename) {
+		setlocale(LC_ALL, 'ja_JP.UTF-8');
+		$path_parts = pathinfo($filename);
+
+		
+		$this->attached = true;
+		$filebody = file_get_contents($filename);
+		$filename = mb_convert_encoding(basename($filename), 'ISO-2022-JP');
+		$filename = "=?ISO-2022-JP?B?" . base64_encode($filename) . "?=";
+		$base64 = "--{$this->boundary}\n";
+		$base64 .= "Content-Type: application/octet-stream; name=\"". mb_encode_mimeheader($path_parts['basename'], 'ISO-2022-JP'). "\"\n";	
+		$base64 .= "Content-Transfer-Encoding: base64\n";
+		$base64 .= "Content-Disposition: attachment; filename=\"". mb_encode_mimeheader($path_parts['basename'], 'ISO-2022-JP'). "\"\n\n";	
+
+		
+
+		$f_encoded = chunk_split(base64_encode($filebody));
+		$base64 .= $f_encoded . "\n\n";
+		return $base64;
+	}
+
+	public function Text(String $msg):String{
+		$txt = 	"--{$this->boundary}\n";
+		$txt .= "Content-Type: text/plain; charset=ISO-2022-JP;Content-Transfer-Encoding: 7bit\n\n";
+		$txt .= $msg ."\n\n";
+		return $txt;
+	}
+
+	public function fetch(String $file,Array $r){
+		$template = file_get_contents($file);
+		foreach($r as $key=>$val ){
+			$search ="<%".$key."%>";
+			if(is_array($val)){
+				$template = str_replace($search,implode(",",$val),$template);
+			} else {
+				$template = str_replace($search,$val,$template);
+			}
+		}
+		return $template;
+	}
+ }
+?>
+<?php
+function _mb_send_mail($to="",$subject="",$message="",$additional_headers="",$additional_params="")
+{
+        global $debug;
+	if ($debug)
+	{
+                echo "<br />\n";
+                echo "============================================================================<br />\n";
+		echo "to:\t".$to."<br />\n";
+		echo "subject:\t".$subject."<br />\n";
+		echo "message:\t".$message."<br />\n";
+		echo "headers:\t".$additional_headers."<br />\n";
+		echo "params:\t".$additional_params."<br />\n";
+                echo "============================================================================<br />\n";
+                echo "<br />\n";
+	}
+	else
+		mb_send_mail($to,$subject,$message,$additional_headers,$additional_params);
+}
+?>

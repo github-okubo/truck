@@ -1,0 +1,151 @@
+form{
+    background-color: #fbf8f5;
+    
+    padding:30px 30px;
+    /* outline: 5px rgb(249, 145, 9) solid; */
+  }
+
+  
+  
+h1,h3,#submit{
+      text-align:center;
+  }
+
+
+
+.mailform{
+  margin:auto;
+}
+
+input{
+  width:100%;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width:100%;
+}
+
+span{
+  display:block;
+}
+
+
+button {
+  height: 50px;
+  width: 100px;
+  margin-top: 5px;
+  line-height: 5px;
+  text-align:center;
+}
+
+
+.btn button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  min-width: 120px; /* ボタンの最小幅を指定 */
+  transform: translateY(-3px);
+  text-decoration: none;
+  color: #fff;
+  font-size:18px;
+  /*background-color: #008000; ←元の背景色は不要なので削除*/
+  border-radius:8px;
+  text-align:center;
+  padding:10px 20px;
+  transition:0.3s all;
+}
+
+.btn button:not(:last-child) {
+  margin-right: 10px;
+}
+
+/* .btn button:hover {
+  box-shadow:0 2px 0 0 #005400;
+  transform: translateY(-2px);
+} */
+ #mailform dl {
+    margin: auto;
+  }
+
+
+@media screen and (min-width: 769px)  {
+    form{
+      text-align:center;
+      }
+      
+    dl{
+      width:80%;
+      display: flex;
+      flex-wrap: wrap;
+      margin:auto;
+      text-align: center;
+    }
+  
+    dt {
+      width: 35%;
+      padding: 20px;
+      border-top:1px solid #000;
+      border-bottom:1px solid #000;
+      border-left:1px solid #000;
+      background-color: #7bddf3;
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size:1.2em;
+      margin: 0 0 5px 0;
+    }
+    
+    dd {
+      width: 65%;
+      padding: 30px;
+      border:1px solid #000;
+      background-color: #F3F3F3;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      font-size:1.2em;
+      margin: 0 0 5px 0;
+    }
+  }
+
+
+/* 最大768から適用 */
+@media screen and (max-width: 768px)  {
+form{
+  width: 100%;
+  text-align:center;
+  margin: 0 auto;
+  }
+ 
+dl{
+   display: inline-block;
+   vertical-align: middle;
+}
+dt {
+  font-weight:bold;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  text-align:left;
+  align-items: center;
+  justify-content: center;
+  font-size:1.2em;
+}
+
+dd {
+  width:100%;
+  padding: 10px;
+  border:1px solid #000;
+  background-color: #F3F3F3;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  font-size:1.2em;
+  text-align:left;
+  justify-content: center;
+}
+
+}

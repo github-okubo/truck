@@ -1,0 +1,55 @@
+<?
+class web{
+
+	public $arr;
+	public $tag;
+
+	public function __construct($arr){
+		$this->arr = $arr;
+	}
+
+	function make(){
+		return $this;
+	}
+
+	function hidden(){
+		foreach($this->arr as $attr=>$val){
+			$this->tag .= '<input type="hidden" name="';
+			$this->tag .= $attr .'"';
+			$this->tag .= ' value="';
+			$this->tag .= $val . '" />';
+			$this->tag .= sprintf("%c",10);
+		}
+		return $this;
+	}
+
+	function select(String $name,String $selected=""){
+		$this->tag = '<select name="' .$name.'">';
+		foreach((array)$this->arr as $attr=>$val){
+			if($selected != $val){
+				$this->tag .= '<option value="' .$val.  '">'.$val.'</option>';
+			} else {
+				$this->tag .= '<option value="' .$val.  '" selected>'.$val.'</option>';
+			}
+		}
+		$this->tag .= '</select>';
+		return $this;
+	}
+
+
+	function fetch(String $txt,Array $r){
+		foreach($r as $key=>$val ){
+			$search ="<%".$key."%>";
+			$txt = str_replace($search,$val,$txt);
+		}
+		return $txt;
+	}
+
+	function show(){
+		echo $this->tag;
+		return $this;
+	}
+
+
+}
+?>

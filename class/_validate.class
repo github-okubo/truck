@@ -1,0 +1,15 @@
+<?
+class validate{
+    public function isTel($tel){
+
+        if (!is_numeric($tel)) {
+            return false;
+        }
+        if ($tel[0] != '0') {
+            return false;
+        }
+
+        return true;
+    }
+}
+?>
